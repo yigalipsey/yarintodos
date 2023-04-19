@@ -11,13 +11,12 @@ function Form() {
   const { handleSubmit, reset } = useForm()
 
   const onSubmit = (data) => {
-    console.log(input)
     dispatch(addTask(input))
     reset()
   }
 
   return (
-    <div className='p-4'>
+    <div className='p-4 w-5/6 mx-auto'>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex flex-col mb-4'>
           <label

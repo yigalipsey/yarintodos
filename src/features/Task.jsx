@@ -14,6 +14,7 @@ export const todoListSlice = createSlice({
         id: nextTaskId++,
         title: action.payload,
         completed: false,
+        isNeedToUpdate: false,
       })
       localStorage.setItem('tasks', JSON.stringify(state.tasks))
     },
@@ -31,14 +32,23 @@ export const todoListSlice = createSlice({
     updateTask: (state, action) => {
       const task = state.tasks.find((task) => task.id === action.payload.id)
       if (task) {
-        task.title = action.payload.title
+        console.log(action.payload)
+        task.title = action.payload.newTitle
+        localStorage.setItem('tasks', JSON.stringify(state.tasks))
+      }
+    },
+    updateNeed: (state, action) => {
+      const task = state.tasks.find((task) => task.id === action.payload.id)
+      if (task) {
+        console.log(action.payload)
+        task.isNeedToUpdate = true
         localStorage.setItem('tasks', JSON.stringify(state.tasks))
       }
     },
   },
 })
 
-export const { addTask, deleteTask, completeTask, updateTask } =
+export const { addTask, deleteTask, completeTask, updateTask, updateNeed } =
   todoListSlice.actions
 
 export default todoListSlice.reducer

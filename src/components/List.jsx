@@ -1,43 +1,101 @@
+import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { deleteTask, completeTask, updateTask } from '../features/Task'
 import { GrCompliance } from 'react-icons/gr'
 import { AiFillDelete } from 'react-icons/ai'
-import { useState } from 'react'
+import {
+  updateTask,
+  deleteTask,
+  completeTask,
+  updateNeed,
+} from '../features/Task'
 
-function List() {
-  const [isOpen, setIsOpen] = useState(false)
+const List = () => {
   const tasks = useSelector((state) => state.todoList.tasks)
   const dispatch = useDispatch()
-  const handleDelete = (taskId) => {
-    dispatch(deleteTask(taskId))
+
+  const handleComplete = (id) => {
+    dispatch(completeTask(id))
   }
-  const handleComplete = (taskId) => {
-    dispatch(completeTask(taskId))
+
+  const handleDelete = (id) => {
+    dispatch(deleteTask(id))
   }
-  const handleUpdate = (taskId, newTitle) => {
-    dispatch(updateTask({ id: taskId, title: newTitle }))
+
+  const handleUpdate = (id, newTitle) => {
+    dispatch(updateTask({ id, newTitle }))
   }
+
+  const [showUpdateInput, setShowUpdateInput] = useState(false)
+  const [updateTitle, setUpdateTitle] = useState('')
+  const [idTask, setId] = useState(null)
+
+  const handleUpdateInputChange = (e) => {
+    setUpdateTitle(e.target.value)
+  }
+
+  const handleUpdateSubmit = (id) => {
+    dispatch(updateTask({ id, newTitle: updateTitle }))
+    setShowUpdateInput(false)
+    setUpdateTitle('')
+  }
+
+  const handleUpdat = (id) => {
+    dispatch(updateNeed({ id }))
+  }
+
   return (
-    <ul className='mt-4'>
-      <div>
-        {tasks.map((task, index) => (
-          <li className={task.completed ? 'text-green-500' : ''} key={index}>
-            <div className=' my-2 mx-3'>
-              <div className={`  w-[90%] overflow-x-scroll `}>{task.title}</div>
+    <ul className='mt-4   w-5/6 mx-auto'>
+      {tasks.map((task, index) => (
+        <li key={index} className={` border border-y-black`}>
+          <div
+            className={`flex items-center justify-between my-2 mx-3 ${
+              task.completed ? 'bg-green-500' : ''
+            }`}
+          >
+            <div className={`flex-1 mr-2 ${showUpdateInput && 'hidden'}`}>
+              {task.title}
+            </div>
+            {/* && idTask === task.id */}
+            <div className={`${!showUpdateInput && 'hidden'} `}>
+              <input
+                type='text'
+                value={updateTitle}
+                onChange={handleUpdateInputChange}
+                className='p-1 border rounded'
+              />
+              <button
+                className='mx-2 p-1  text-red-500 rounded'
+                onClick={() => handleUpdateSubmit(task.id)}
+              >
+                Save
+              </button>
+              <button
+                className='p-1 bg-red-500 text-white rounded'
+                onClick={() => setShowUpdateInput(false)}
+              >
+                Cancel
+              </button>
+            </div>
+            <div className='flex'>
               <button onClick={() => handleComplete(task.id)}>
                 <GrCompliance />
               </button>
               <button onClick={() => handleDelete(task.id)}>
                 <AiFillDelete />
               </button>
-              <button onClick={() => handleUpdate(task.id, 'New Title')}>
+              <button
+                className=' p-1 bg-blue-500 text-white rounded'
+                onClick={() => {
+                  setShowUpdateInput(true)
+                  handleUpdat(task.id)
+                }}
+              >
                 עדכן משימה זו
               </button>
-              {}
             </div>
-          </li>
-        ))}
-      </div>
+          </div>
+        </li>
+      ))}
     </ul>
   )
 }
