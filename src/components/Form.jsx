@@ -1,15 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
-import { addTask } from '../redux/todoListSlice'
+import { addTask } from '../features/Task'
+import { useState } from 'react'
 
 function Form() {
+  const [input, setInput] = useState()
   const dispatch = useDispatch()
   const tasks = useSelector((state) => state.todoList.tasks)
 
   const { register, handleSubmit, reset } = useForm()
 
   const onSubmit = (data) => {
-    dispatch(addTask(data.task))
+    console.log(input)
+    dispatch(addTask(input))
     reset()
   }
 
@@ -21,20 +24,21 @@ function Form() {
             htmlFor='task'
             className='mb-2 font-bold text-lg text-gray-900'
           >
-            Add a task:
+            הוסף משימה חדשה
           </label>
           <input
             type='text'
             id='task'
             name='task'
             className='border border-gray-400 p-2 rounded-lg'
+            onChange={(e) => setInput(e.target.value)}
           />
         </div>
         <button
           type='submit'
           className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200'
         >
-          Add Task
+          שלח משימה
         </button>
       </form>
       <ul className='mt-4'>
