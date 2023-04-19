@@ -10,8 +10,11 @@ export const todoListSlice = createSlice({
 
   reducers: {
     addTask: (state, action) => {
-      state.tasks.push(action.payload)
-
+      state.tasks.push({
+        id: nextTaskId++,
+        title: action.payload,
+        completed: false,
+      })
       localStorage.setItem('tasks', JSON.stringify(state.tasks))
     },
     deleteTask: (state, action) => {

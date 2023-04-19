@@ -8,7 +8,7 @@ function Form() {
   const dispatch = useDispatch()
   const tasks = useSelector((state) => state.todoList.tasks)
 
-  const { register, handleSubmit, reset } = useForm()
+  const { handleSubmit, reset } = useForm()
 
   const onSubmit = (data) => {
     console.log(input)
@@ -24,7 +24,7 @@ function Form() {
             htmlFor='task'
             className='mb-2 font-bold text-lg text-gray-900'
           >
-            הוסף משימה חדשה
+            אפליקציית המשימות שלי
           </label>
           <input
             type='text'
@@ -38,16 +38,9 @@ function Form() {
           type='submit'
           className='bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200'
         >
-          שלח משימה
+          הוסף משימה
         </button>
       </form>
-      <ul className='mt-4'>
-        {tasks.map((task, index) => (
-          <li key={index} className='mb-2'>
-            {task}
-          </li>
-        ))}
-      </ul>
     </div>
   )
 }
