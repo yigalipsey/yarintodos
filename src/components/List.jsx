@@ -64,16 +64,16 @@ const List = () => {
                 className='p-1 border rounded'
               />
               <button
-                className='mx-2 p-1  text-red-500 rounded'
+                className='mx-2 p-1  text-violet-800-500 rounded'
                 onClick={() => handleUpdateSubmit(task.id)}
               >
-                Save
+                שמור שינויים
               </button>
               <button
                 className='p-1 bg-red-500 text-white rounded'
                 onClick={() => setShowUpdateInput(false)}
               >
-                Cancel
+                ביטול
               </button>
             </div>
             <div className='flex'>
